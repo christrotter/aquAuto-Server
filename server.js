@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser= require('body-parser')
 const app = express();
 
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json());
 
 app.listen(3000, function() {
   console.log('listening on 3000')
@@ -10,10 +11,12 @@ app.listen(3000, function() {
 
 app.get('/', function (req, res){
     res.sendFile(__dirname + '/index.html')
+    
 })
 
 app.post('/receiveSensorData', (req, res) => {
   console.log(req.body)
+  res.end("Data accepted.");
 })
 
 console.log('Server running on port 3000.');
