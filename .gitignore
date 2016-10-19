@@ -1,0 +1,7 @@
+/node_modules
+/.idea
+siplay.db
+test.db
+/coverage
+newrelic.js
+newrelic_agent.log
