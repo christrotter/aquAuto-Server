@@ -6,7 +6,7 @@ const os = require('os')
 
 const app = express();
 
-const influx = new Influx.InfluxDB('http://root:root@127.0.0.1:8086/SensorData')
+const influx = new Influx.InfluxDB('http://root:root@0.0.0.0:8086/SensorData')
 influx.getDatabaseNames()
   .then(names => {
     if (!names.includes('SensorData')) {
@@ -20,6 +20,7 @@ influx.getDatabaseNames()
   })
   .catch(err => {
     console.error(`Error creating Influx database!`);
+    console.error(err.stack);
   })
 
 app.use(bodyParser.urlencoded({extended: false}))
@@ -27,15 +28,14 @@ app.use(bodyParser.json());
 
 app.get('/', function (req, res){
     res.sendFile(__dirname + '/index.html')
-    
 })
 
 app.post('/receiveSensorData', (req, res) => {
-  console.log(req.body)
+  console.log("Receiving:" + req.body.sourceDevice + " on:" + req.body.sensorName + " value:" + req.body.sensorData)
   influx.writePoints([
     {
       measurement: req.body.dataType,
-      tags: { host: os.hostname() },
+      tags: { sourceDevice: req.body.sourceDevice },
       fields: {
         sensorName: req.body.sensorName,
         sensorData: req.body.sensorData,
@@ -45,7 +45,3 @@ app.post('/receiveSensorData', (req, res) => {
   ])
   res.end("Data accepted.");
 })
-/*
-console.log('Server running on port 3000.');
-console.log(__dirname);
-*/

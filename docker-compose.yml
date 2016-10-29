@@ -1,0 +1,19 @@
+influxdb:
+  build: ./influxdb
+  links:
+    - app1:app1
+  ports:
+    - "8086:8086"
+    - "8083:8083"
+  volumes:
+    - /C/Docker/InfluxDB:/influxdb
+  environment:
+    - DOMAIN_NAME=practicaltech.ca
+app1:
+  build: .
+  ports:
+    - "3000:3000"
+  volumes:
+    - /C/git/aquAuto-Server:/app
+  environment:
+    - MODE=prod
