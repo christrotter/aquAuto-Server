@@ -25,6 +25,7 @@ influx.getDatabaseNames()
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json());
+app.use(express.static('.'));
 
 app.get('/', function (req, res){
     res.sendFile(__dirname + '/index.html')
