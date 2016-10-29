@@ -6,7 +6,7 @@ const os = require('os')
 
 const app = express();
 
-const influx = new Influx.InfluxDB('http://root:root@0.0.0.0:8086/SensorData')
+const influx = new Influx.InfluxDB('http://root:root@influxdb:8086/SensorData')
 influx.getDatabaseNames()
   .then(names => {
     if (!names.includes('SensorData')) {

@@ -1,7 +1,5 @@
 influxdb:
   build: ./influxdb
-  links:
-    - app1:app1
   ports:
     - "8086:8086"
     - "8083:8083"
@@ -11,6 +9,8 @@ influxdb:
     - DOMAIN_NAME=practicaltech.ca
 app1:
   build: .
+  links:
+    - influxdb:influxdb
   ports:
     - "3000:3000"
   volumes:
