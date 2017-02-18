@@ -1,3 +1,9 @@
 docker run -p 8083:8083 -p 8086:8086 -v /C/Docker/InfluxDB influxdb
 
-docker run -d -e "APP=server.js" -p 3000:3000 -v /C/git/aquAuto-Server:/app dashersw/node-pm2
+docker run -d -e "APP=server.js" -p 3000:3000 -v /C/git/aquAuto-Server:/app dashersw/alpine-node-pm2
+docker run -p 3000:3000 -v /C/git/aquAuto-Server/app:/app keymetrics/pm2-docker-alpine
+
+
+docker exec -it aquautoserver_app /bin/bash
+
+docker-compose ps

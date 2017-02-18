@@ -1,7 +1,2 @@
-/node_modules
-/.idea
-siplay.db
-test.db
-/coverage
-newrelic.js
-newrelic_agent.log
+app/node_modules
+influxdb/var/lib/influxdb/wal

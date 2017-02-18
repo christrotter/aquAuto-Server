@@ -1,19 +1,21 @@
-influxdb:
-  build: ./influxdb
-  ports:
-    - "8086:8086"
-    - "8083:8083"
-  volumes:
-    - /C/Docker/InfluxDB:/influxdb
-  environment:
-    - DOMAIN_NAME=practicaltech.ca
-app1:
-  build: .
-  links:
-    - influxdb:influxdb
-  ports:
-    - "3000:3000"
-  volumes:
-    - /C/git/aquAuto-Server:/app
-  environment:
-    - MODE=prod
+version: '2'
+
+services:
+  influxdb:
+    build: influxdb/
+    ports:
+      - "8086:8086"
+      - "8083:8083"
+    volumes:
+      - ./influxdb/var/lib/influxdb/:/var/lib/influxdb/
+    environment:
+      - DOMAIN_NAME=practicaltech.ca
+      - INFLUXDB_CONFIG_PATH=/var/lib/influxdb/influxdb.conf
+  app:
+    build: app/
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app/:/app/
+    depends_on:
+      - influxdb

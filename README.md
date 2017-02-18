@@ -1,7 +1,28 @@
 # aquAuto-Server
-This has a docker-compose file, brings up two instances - InfluxDB and PM2 node.  The node instance has the listener on port 3000.
+This has a docker-compose file, brings up two instances - InfluxDB and node.  
+The node instance has the listener on port 3000, InfluxDB on 8083 (admin) & 8086 (data).
 
-Get started: docker-compose -f docker-compose.yml up -d
-See app logs: docker exec -it aquautoserver_app1_1 pm2 logs server
+Get started:
+```
+docker-compose build --no-cache
+docker-compose up
+```
 
-Note this was created using Docker for Windows, so the volume mappings will need a look.
+Start the docker pieces on their own...
+
+# Sending data via Postman #
+## Target ##
+http://127.0.0.1:3000/receiveSensorData
+
+## Headers ##
+I think these are automatically set by Postman when you set the body to x-www-form-urlencoded.
+`Content-Type: application/x-www-form-urlencoded`
+
+## Body ##
+Set body to x-www-form-urlencoded
+```
+sourceDevice: Arduino-1
+sensorName: temperature-1
+sensorData: 25
+dataScale: celcius
+```

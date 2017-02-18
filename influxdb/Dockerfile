@@ -4,5 +4,3 @@ MAINTAINER Chris Trotter
 
 EXPOSE 8083
 EXPOSE 8086
-
-VOLUME ["/C/Docker/InfluxDB"]
