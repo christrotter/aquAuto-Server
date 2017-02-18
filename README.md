@@ -14,15 +14,34 @@ Start the docker pieces on their own...
 ## Target ##
 http://127.0.0.1:3000/receiveSensorData
 
-## Headers ##
-I think these are automatically set by Postman when you set the body to x-www-form-urlencoded.
-`Content-Type: application/x-www-form-urlencoded`
-
 ## Body ##
-Set body to x-www-form-urlencoded
+Set body to raw, JSON.
+
+Note no quotes on the sensorData value, this keeps it as an integer.  (I think?)
 ```
-sourceDevice: Arduino-1
-sensorName: temperature-1
-sensorData: 25
-dataScale: celcius
+{
+    "dataType": "SensorData",
+    "sourceDevice": "Arduino-1",
+    "sensorName": "tempProbe-1",
+    "sensorData": 24,
+    "dataScale": "celcius"
+}
 ```
+## Headers ##
+I believe these are automatically set by Postman.
+`Content-Type: application/json`
+
+## Curl example ##
+curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -H "Postman-Token: ca151449-9258-37fd-f9bd-ae49656ec983" -d '{
+    "dataType": "SensorData",
+    "sourceDevice": "Arduino-1",
+    "sensorName": "tempProbe-1",
+    "sensorData": 24,
+    "dataScale": "celcius"
+}' "http://127.0.0.1:3000/receiveSensorData"
+
+# Checking data in InfluxDB #
+Load up this url in your browser: `http://localhost:8083/#`
+
+Then input this query:
+`SELECT * FROM /.*/ WHERE time > now() - 10m`
